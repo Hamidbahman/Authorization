@@ -5,7 +5,6 @@ using Domain;
 using Domain.Entities;
 using Infrastructure.Repositories;
 using Microsoft.IdentityModel.Tokens;
-using static System.Net.Mime.MediaTypeNames;
 
 public class AuthorizationService
 {
@@ -59,7 +58,7 @@ public class AuthorizationService
         }
     }
 
-public async Task<List<Domain.Entities.Application>> GetApplicationsByUserRolesAsync(string token)
+public async Task<List<Application>> GetApplicationsByUserRolesAsync(string token)
 {
     long? userId = GetUserIdFromAccessToken(token);
     
@@ -85,7 +84,7 @@ public async Task<List<Domain.Entities.Application>> GetApplicationsByUserRolesA
     var roles = userRoles.Select(ur => ur.Role).ToList();
 
 
-    var applications = new List<Domain.Entities.Application>();
+    var applications = new List<Application>();
 
 
     foreach (var role in roles)
@@ -99,28 +98,28 @@ public async Task<List<Domain.Entities.Application>> GetApplicationsByUserRolesA
 
 public async Task<List<Mask>> GetMasksAsync(long userId, string clientId)
 {
+    // Get user roles
     var userRoles = await _urRepo.GetByUserIdAsync(userId);
-
     if (userRoles == null || !userRoles.Any())
     {
         throw new UnauthorizedAccessException("User has no roles assigned.");
     }
 
-    var roles = userRoles.Select(ur => ur.Role).ToList();
-
     var permissions = new List<Permission>();
-
-    foreach (var role in roles)
+    foreach (var userRole in userRoles)
     {
-        var roleWithPermissions = await _roleRepo.GetByIdAsync(role.Id);
-
+        var roleWithPermissions = await _roleRepo.GetByIdAsync(userRole.Role.Id);
         if (roleWithPermissions != null)
         {
             permissions.AddRange(roleWithPermissions.Permissions);
         }
     }
 
+    var application = await _appRepo.GetByClientIdAsync(clientId);
+
+
 }
+
 
 }
 

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Domain;
 
 namespace DataAccess.Repositories
 {
