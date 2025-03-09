@@ -1,0 +1,71 @@
+using Domain;
+using Domain.Entities;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
+public class UserRoleRepository : IUserRoleRepository
+{
+    private readonly AuthorizationDbContext _context;
+
+    public UserRoleRepository(AuthorizationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<IEnumerable<UserRole>> GetAllAsync()
+    {
+        return await _context.UserRoles
+            .AsSplitQuery()
+            .Include(ur => ur.User)
+            .Include(ur => ur.Role)
+            .ToListAsync();
+    }
+
+    public async Task<UserRole?> GetByIdAsync(long id)
+    {
+        return await _context.UserRoles
+            .AsSplitQuery()
+            .Include(ur => ur.User)
+            .Include(ur => ur.Role)
+            .FirstOrDefaultAsync(ur => ur.Id == id);
+    }
+
+    public async Task<IEnumerable<UserRole>> GetByUserIdAsync(long userId)
+    {
+        return await _context.UserRoles
+            .Where(ur => ur.UserId == userId)
+            .Include(ur => ur.Role)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<UserRole>> GetByRoleIdAsync(long roleId)
+    {
+        return await _context.UserRoles
+            .Where(ur => ur.RoleId == roleId)
+            .Include(ur => ur.User)
+            .ToListAsync();
+    }
+
+    public async Task AddAsync(UserRole userRole)
+    {
+        await _context.UserRoles.AddAsync(userRole);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(UserRole userRole)
+    {
+        _context.UserRoles.Update(userRole);
+        await _context.SaveChangesAsync();
+    }
+
+
+    public async Task DeleteAsync(long id)
+    {
+        var userRole = await _context.UserRoles.FindAsync(id);
+        if (userRole != null)
+        {
+            _context.UserRoles.Remove(userRole);
+            await _context.SaveChangesAsync();
+        }
+    }
+}
