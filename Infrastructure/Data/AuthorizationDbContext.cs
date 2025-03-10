@@ -18,5 +18,6 @@ public class AuthorizationDbContext : DbContext
     public DbSet<Permission> Permissions {get;set;}
     public DbSet<Mask> Masks {get;set;}
     public DbSet<Menu> Menus {get;set;}
+    public DbSet<ApplicationPackage> ApplicationPackages{get;set;}
 
 }

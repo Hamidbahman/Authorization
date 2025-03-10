@@ -37,6 +37,13 @@ public class UserRoleRepository : IUserRoleRepository
             .Include(ur => ur.Role)
             .ToListAsync();
     }
+    public async Task<List<Role>> GetRolesByUserIdAsync(long userId)
+    {
+        return await (from userRole in _context.Set<UserRole>()
+            join role in _context.Set<Role>() on userRole.RoleId equals role.Id
+            where userRole.UserId == userId
+            select role).ToListAsync();
+    }
 
     public async Task<IEnumerable<UserRole>> GetByRoleIdAsync(long roleId)
     {

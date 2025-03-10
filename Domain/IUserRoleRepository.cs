@@ -10,4 +10,6 @@ public interface IUserRoleRepository
     Task AddAsync(UserRole userRole);
     Task UpdateAsync(UserRole userRole);
     Task DeleteAsync(long id);
+    Task<List<Role>> GetRolesByUserIdAsync(long userId);
+
 }

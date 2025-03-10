@@ -15,6 +15,11 @@ namespace Infrastructure.Repositories
         Task<bool> ExistsAsync(string uuid);
         Task AddAsync(Role role);
         Task UpdateAsync(Role role);
+        Task <List<Role>> GetRolesByApplicationId(long applicationId);
+
         Task DeleteAsync(long id);
+        Task<List<Permission>> GetPermissionsByRoleIdsAsync(List<long> roleIds);
+
+
     }
 }

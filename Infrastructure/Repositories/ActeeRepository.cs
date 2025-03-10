@@ -68,5 +68,20 @@ namespace DataAccess.Repositories
         {
             return await _context.SaveChangesAsync();
         }
+        public async Task<List<Actee>> GetActeesByClientIdAsync(string clientId)
+        {
+            return await _context.Actees
+                .Include(a => a.ApplicationPackage)
+                .ThenInclude(ap => ap.Application)
+                .Where(a => a.ApplicationPackage.Application.ClientId == clientId)
+                .ToListAsync();
+        }
+
+
+        public async Task<Actee?> GetActeeByApplicationId(long applicationId)
+        {
+            return await _context.Actees
+                .Include(a => a.ApplicationPackage)
+                .FirstOrDefaultAsync(a => a.ApplicationPackage.ApplicationId == applicationId);        }
     }
 }

@@ -9,18 +9,31 @@ using Microsoft.IdentityModel.Tokens;
 public class AuthorizationService
 {
     private readonly IUserRepository _userRepository;
+    private readonly IMaskRepository _maskRepository;
     private readonly IUserRoleRepository _urRepo;
     private readonly IRoleRepository _roleRepo;
+    private readonly IActeeRepository _acteeRepo;
+    private readonly IPermissionRepository _permissionRepo;
     private readonly IApplicationRepository _appRepo;
+    private readonly IMenuRepository _menuRepo;
     private readonly byte[] _secretKey;
 
     public AuthorizationService(
+        IMenuRepository menuRepository,
+        IPermissionRepository permissionRepo,
         IRoleRepository roleRepo,
         IUserRoleRepository userRoleRepository,
         IUserRepository userRepository,
         IApplicationRepository applicationRepository,
+        IActeeRepository acteeRepository,
+        IMaskRepository maskRepository,
         string secretKey)
+
     {
+        _maskRepository = maskRepository;
+        _menuRepo = menuRepository;
+        _permissionRepo = permissionRepo;
+        _acteeRepo = acteeRepository;
         _roleRepo = roleRepo;
         _urRepo = userRoleRepository;
         _userRepository = userRepository;
@@ -98,28 +111,28 @@ public async Task<List<Application>> GetApplicationsByUserRolesAsync(string toke
 
 public async Task<List<Mask>> GetMasksAsync(long userId, string clientId)
 {
-    // Get user roles
-    var userRoles = await _urRepo.GetByUserIdAsync(userId);
-    if (userRoles == null || !userRoles.Any())
-    {
-        throw new UnauthorizedAccessException("User has no roles assigned.");
-    }
+    if (userId <= 0)
+        throw new ArgumentException("Invalid User ID", nameof(userId));
 
-    var permissions = new List<Permission>();
-    foreach (var userRole in userRoles)
-    {
-        var roleWithPermissions = await _roleRepo.GetByIdAsync(userRole.Role.Id);
-        if (roleWithPermissions != null)
-        {
-            permissions.AddRange(roleWithPermissions.Permissions);
-        }
-    }
+    if (string.IsNullOrWhiteSpace(clientId))
+        throw new ArgumentException("Client ID cannot be null or empty", nameof(clientId));
 
     var application = await _appRepo.GetByClientIdAsync(clientId);
+    if (application == null)
+        throw new KeyNotFoundException("Application with the provided Client ID not found.");
 
+    var userRoles = await _urRepo.GetRolesByUserIdAsync(userId);
+    if (!userRoles.Any())
+        throw new UnauthorizedAccessException("User does not have any roles assigned.");
 
+    var permissions = await _permissionRepo.GetPermissionsByRolesAsync(userRoles.Select(r => r.Id).ToList());
+    if (!permissions.Any())
+        return new List<Mask>(); 
+
+    var masks = await _maskRepository.GetMasksByPermissionsAsync(permissions.Select(p => p.Id).ToList());
+
+    return masks;
 }
-
 
 }
 

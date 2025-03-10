@@ -10,6 +10,7 @@ namespace Domain;
         Task<IEnumerable<Actee>> GetAllAsync();
         Task<IEnumerable<Actee>> GetByStatusAsync(StatusTypes status);
         Task<IEnumerable<Actee>> GetByActeeTypeAsync(ActeeTypes acteeType);
+        Task<Actee?> GetActeeByApplicationId(long applicationId); 
         Task AddAsync(Actee actee);
         Task UpdateAsync(Actee actee);
         Task DeleteAsync(long id);

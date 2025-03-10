@@ -17,5 +17,10 @@ namespace Domain
         Task AddAsync(Permission permission);
         Task UpdateAsync(Permission permission);
         Task DeleteAsync(long id);
+        Task<List<Mask>> GetMasksByPermissionIdsAsync(List<long> permissionIds);
+        Task<List<long>> GetPermissionIdsByRolesAsync(List<Role> roles);
+        Task<List<Permission>> GetPermissionsByRolesAsync(List<long> roleIds);
+
+
     }
 }

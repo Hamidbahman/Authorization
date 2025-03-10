@@ -58,6 +58,17 @@ namespace Infrastructure.Repositories
                 .Include(p => p.Actee)
                 .ToListAsync();
         }
+        public List<long> GetPermissionIdsByRoles(List<Role> roles)
+        {
+            return roles.SelectMany(r => r.Permissions.Select(p => p.Id)).Distinct().ToList();
+        }
+
+        public async Task<List<Permission>> GetPermissionsByRolesAsync(List<long> roleIds)
+        {
+            return await _context.Set<Permission>()
+                .Where(p => roleIds.Contains(p.RoleId))
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<Permission>> GetByGrantingLevelAsync(int granting)
         {
@@ -95,5 +106,22 @@ namespace Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public Task<List<long>> GetPermissionIdsByRolesAsync(List<Role> roles)
+        {
+            var permissionIds = roles
+                .SelectMany(r => r.Permissions.Select(p => p.Id))
+                .Distinct()
+                .ToList();
+
+            return Task.FromResult(permissionIds);
+    }
+
+        public async Task<List<Mask>> GetMasksByPermissionIdsAsync(List<long> permissionIds)
+{
+    return await _context.Masks
+        .Where(m => permissionIds.Contains(m.PermissionId))
+        .ToListAsync();
+}
+
     }
 }

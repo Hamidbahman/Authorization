@@ -16,6 +16,13 @@ namespace Infrastructure.Repositories
         {
             _context = context;
         }
+        public async Task<List<Role>> GetRolesByApplicationId(long applicationId)
+        {
+            return _context.Roles
+                .Where(r => r.ApplicationId == applicationId)
+               .Include(r => r.Permissions)
+               .ToList();
+        }
 
         public async Task<Role?> GetByIdAsync(long id)
         {
@@ -37,6 +44,23 @@ namespace Infrastructure.Repositories
                 .Include(r => r.Permissions)
                 .ToListAsync();
         }
+
+        public async Task<List<Permission>> GetPermissionsByRoleIdsAsync(List<long> roleIds)
+        {
+            return await _context.Roles
+                .Where(r => roleIds.Contains(r.Id))
+                .SelectMany(r => r.Permissions)
+                .ToListAsync();
+        }
+        public async Task<List<Role>> GetRolesByApplicationId(long applicationId)
+        {
+            return _context.Set<Role>()
+               .Where(r => r.ApplicationId == applicationId)
+               .Include(r => r.Permissions)
+               .ToList();
+        }
+
+
 
         public async Task<IEnumerable<Role>> GetByApplicationIdAsync(long applicationId)
         {
