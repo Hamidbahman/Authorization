@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Data;
@@ -52,13 +53,7 @@ namespace Infrastructure.Repositories
                 .SelectMany(r => r.Permissions)
                 .ToListAsync();
         }
-        public async Task<List<Role>> GetRolesByApplicationId(long applicationId)
-        {
-            return _context.Set<Role>()
-               .Where(r => r.ApplicationId == applicationId)
-               .Include(r => r.Permissions)
-               .ToList();
-        }
+
 
 
 

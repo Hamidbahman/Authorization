@@ -3,6 +3,8 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
+
+namespace Infrastructure.Repositories;
 public class UserRoleRepository : IUserRoleRepository
 {
     private readonly AuthorizationDbContext _context;

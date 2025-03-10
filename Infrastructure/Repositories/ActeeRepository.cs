@@ -8,7 +8,7 @@ using Domain.Enums;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Domain;
 
-namespace DataAccess.Repositories
+namespace Infrastructure.Repositories
 {
     public class ActeeRepository : IActeeRepository
     {
@@ -70,7 +70,7 @@ namespace DataAccess.Repositories
         }
         public async Task<List<Actee>> GetActeesByClientIdAsync(string clientId)
         {
-            return await _context.Actees
+            return await _context.Set<Actee>()
                 .Include(a => a.ApplicationPackage)
                 .ThenInclude(ap => ap.Application)
                 .Where(a => a.ApplicationPackage.Application.ClientId == clientId)
@@ -80,7 +80,7 @@ namespace DataAccess.Repositories
 
         public async Task<Actee?> GetActeeByApplicationId(long applicationId)
         {
-            return await _context.Actees
+            return await _context.Set<Actee>()
                 .Include(a => a.ApplicationPackage)
                 .FirstOrDefaultAsync(a => a.ApplicationPackage.ApplicationId == applicationId);        }
     }

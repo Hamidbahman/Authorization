@@ -4819,11 +4819,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hamid.RYMOND\\authorization\\infrastructure\\Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Infrastructure\\Infrastructure.csproj",
       "projectName": "Infrastructure",
-      "projectPath": "C:\\Users\\hamid.RYMOND\\authorization\\infrastructure\\Infrastructure.csproj",
+      "projectPath": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Infrastructure\\Infrastructure.csproj",
       "packagesPath": "C:\\Users\\hamid.RYMOND\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hamid.RYMOND\\authorization\\infrastructure\\obj\\",
+      "outputPath": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4844,8 +4844,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\hamid.RYMOND\\authorization\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\hamid.RYMOND\\authorization\\Domain\\Domain.csproj"
+            "C:\\Users\\hamid.RYMOND\\20\\authorization\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Domain\\Domain.csproj"
             }
           }
         }

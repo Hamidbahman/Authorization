@@ -1,9 +1,10 @@
 using System;
+using Domain;
 using Infrastructure.Data;
 
 namespace Infrastructure.Repositories;
 
-public class ApplicationPackageRepository
+public class ApplicationPackageRepository : IApplicationPackageRepository
 {
     private readonly AuthorizationDbContext _context;
     public ApplicationPackageRepository(AuthorizationDbContext context)

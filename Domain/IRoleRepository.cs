@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Enums;
 
-namespace Infrastructure.Repositories
+namespace Domain
 {
     public interface IRoleRepository
     {

@@ -1,4 +1,5 @@
-using Infrastructure;
+using Domain;
+using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -8,40 +9,21 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Register the DbContext
 builder.Services.AddDbContext<AuthorizationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
 
-// Register repositories
-builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<ApplicationRepository>();
-builder.Services.AddScoped<RoleRepository>();
-builder.Services.AddScoped<UserRoleRepository>();
+builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IActeeRepository, ActeeRepository>();
+builder.Services.AddScoped<IMenuRepository, MenuRepository>();
+builder.Services.AddScoped<IMaskRepository, MaskRepository>();
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
+builder.Services.AddScoped<IApplicationPackageRepository, ApplicationPackageRepository>();
 
-// Generate a random secret key (for development purposes)
-builder.Services.AddScoped<AuthorizationService>(provider =>
-{
-    var config = provider.GetRequiredService<IConfiguration>();
-    var secretKey = config.GetValue<string>("AppSettings:SecretKey");
-
-    // If secretKey is not defined in appsettings.json, generate a random one
-    if (string.IsNullOrEmpty(secretKey))
-    {
-        secretKey = GenerateRandomSecretKey(32); // 32 bytes = 256 bits
-    }
-
-    return new AuthorizationService(
-        provider.GetRequiredService<RoleRepository>(),
-        provider.GetRequiredService<UserRoleRepository>(),
-        provider.GetRequiredService<UserRepository>(),
-        provider.GetRequiredService<ApplicationRepository>(),
-        secretKey
-    );
-});
-
-// Generate a random secret key
 string GenerateRandomSecretKey(int length)
 {
     using (var rng = new RNGCryptoServiceProvider())
