@@ -18,7 +18,7 @@ public class UserRoleRepository : IUserRoleRepository
     {
         return await _context.UserRoles
             .AsSplitQuery()
-            .Include(ur => ur.User)
+            .Include(ur => ur.UserId)
             .Include(ur => ur.Role)
             .ToListAsync();
     }
@@ -27,7 +27,7 @@ public class UserRoleRepository : IUserRoleRepository
     {
         return await _context.UserRoles
             .AsSplitQuery()
-            .Include(ur => ur.User)
+            .Include(ur => ur.UserId)
             .Include(ur => ur.Role)
             .FirstOrDefaultAsync(ur => ur.Id == id);
     }
@@ -36,7 +36,7 @@ public class UserRoleRepository : IUserRoleRepository
     {
         return await _context.UserRoles
             .Where(ur => ur.UserId == userId)
-            .Include(ur => ur.Role)
+            .Include(ur => ur.RoleId)
             .ToListAsync();
     }
     public async Task<List<Role>> GetRolesByUserIdAsync(long userId)
@@ -51,7 +51,7 @@ public class UserRoleRepository : IUserRoleRepository
     {
         return await _context.UserRoles
             .Where(ur => ur.RoleId == roleId)
-            .Include(ur => ur.User)
+            .Include(ur => ur.UserId)
             .ToListAsync();
     }
 

@@ -1,5 +1,5 @@
+using Application.Services;
 using Domain;
-using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +8,8 @@ using System.Security.Cryptography;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
+var secretKey = configuration["JwtSettings:SecretKey"];
 
 builder.Services.AddDbContext<AuthorizationDbContext>(options =>
 {
@@ -23,16 +25,8 @@ builder.Services.AddScoped<IMaskRepository, MaskRepository>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
 builder.Services.AddScoped<IApplicationPackageRepository, ApplicationPackageRepository>();
+builder.Services.AddScoped<AuthorizationService>();
 
-string GenerateRandomSecretKey(int length)
-{
-    using (var rng = new RNGCryptoServiceProvider())
-    {
-        byte[] byteArray = new byte[length];
-        rng.GetBytes(byteArray);
-        return Convert.ToBase64String(byteArray);
-    }
-}
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -40,7 +34,6 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 });
 
-// Add controllers
 builder.Services.AddControllers();
 
 var app = builder.Build();

@@ -17,12 +17,12 @@ namespace Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<List<Role>> GetRolesByApplicationId(long applicationId)
+        public async Task<List<Role>> GetRolesByApplicationIdAsync(long applicationId)
         {
-            return _context.Roles
+            return await _context.Roles
                 .Where(r => r.ApplicationId == applicationId)
                .Include(r => r.Permissions)
-               .ToList();
+               .ToListAsync();
         }
 
         public async Task<Role?> GetByIdAsync(long id)

@@ -29,7 +29,7 @@ public class Role : BaseEntity
     [ForeignKey("ApplicationId")]
     public long ApplicationId { get; private set; }
 
-    public Application? Application { get; private set; }
+    public Aplication? Application { get; private set; }
 
     public bool IsAdmin { get; private set; } = false;
 

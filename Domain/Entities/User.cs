@@ -50,17 +50,11 @@ namespace Domain.Entities;
 
         public bool TwoFactorEnabled { get; private set; } = false;
 
-        public UserProperty UserProperty {get;private set;}
-        public LoginPolicy? LoginPolicy {get;private set;}
-        public UserBiometric? UserBiometric {get; private set;}
 
         public ICollection<UserRole> UserRoles {get;private set;} = new List<UserRole>();    
         public User() { }
 
         public User(
-    UserProperty userProperty,
-    LoginPolicy loginPolicy,
-    UserBiometric userBiometric,
     ICollection<UserRole> userRoles, // ✅ Accept a collection
     string username,
     long id,
@@ -102,10 +96,7 @@ namespace Domain.Entities;
     PictureType = pictureType;
     Scheduled = scheduled;
     TwoFactorEnabled = twoFactorEnabled;
-    UserProperty = userProperty;
-    LoginPolicy = loginPolicy;
-    UserBiometric = userBiometric;
-    UserRoles = userRoles ?? new List<UserRole>(); // ✅ Ensure it's never null
+    UserRoles = userRoles ?? new List<UserRole>(); 
 }
     public void IncrementLoginAttempt()
     {

@@ -7,14 +7,15 @@ using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Domain;
+using Infrastructure.Data;
 
 namespace Infrastructure.Repositories
 {
     public class ActeeRepository : IActeeRepository
     {
-        private readonly DbContext _context;
+        private readonly AuthorizationDbContext _context;
 
-        public ActeeRepository(DbContext context)
+        public ActeeRepository(AuthorizationDbContext context)
         {
             _context = context;
         }

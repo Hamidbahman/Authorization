@@ -18,5 +18,7 @@ public interface IMaskRepository
     Task DeleteAsync(int maskId);
     Task<bool> ExistsAsync(int maskId);
     Task<List<Mask>> GetMasksByPermissionsAsync(List<long> permissionIds);
+    Task<List<Mask>> GetMasksByUserIdAndClientIdAsync(long userId, string clientId);
+
 
 }

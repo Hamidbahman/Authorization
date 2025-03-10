@@ -162,9 +162,6 @@ C:\Users\hamid.RYMOND\authorization\API\obj\Debug\net9.0\ref\API.dll
 C:\Users\hamid.RYMOND\authorization\api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\hamid.RYMOND\authorization\api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\hamid.RYMOND\authorization\api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\API.dll
-C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\refint\API.dll
-C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\API.pdb
 C:\Users\hamid.RYMOND\20\authorization\API\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\hamid.RYMOND\20\authorization\API\bin\Debug\net9.0\appsettings.json
 C:\Users\hamid.RYMOND\20\authorization\API\bin\Debug\net9.0\API.staticwebassets.endpoints.json
@@ -325,5 +322,8 @@ C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\staticwebassets\msbu
 C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.API.props
 C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\staticwebassets.pack.json
 C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\API.csproj.Up2Date
+C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\API.dll
+C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\refint\API.dll
+C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\API.pdb
 C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\API.genruntimeconfig.cache
 C:\Users\hamid.RYMOND\20\authorization\API\obj\Debug\net9.0\ref\API.dll

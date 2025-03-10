@@ -12,5 +12,7 @@ public interface IMenuRepository
     Task AddAsync(Menu menu);
     Task UpdateAsync(Menu menu);
     Task DeleteAsync(string menuKey);
+    Task<List<string>> GetMenuKeysByActeeIdsAsync(List<long> acteeIds);
+
 
 }

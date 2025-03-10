@@ -1,3 +1,4 @@
+
 using System;
 using Domain;
 using Domain.Entities;
@@ -28,6 +29,17 @@ public class MenuRepository : IMenuRepository
     public async Task<List<Menu>> GetAllAsync()
     {
         return await _context.Menus.ToListAsync();
+    }
+    
+    public async Task<List<string>> GetMenuKeysByActeeIdsAsync(List<long> acteeIds)
+    {
+    if (acteeIds == null || !acteeIds.Any())
+        return new List<string>();
+
+    return await _context.Menus
+        .Where(m => acteeIds.Contains(m.ActeeId))
+        .Select(m => m.MenuKey)
+        .ToListAsync();
     }
 
     public async Task<List<Menu>> GetByActeeIdAsync(long acteeId)

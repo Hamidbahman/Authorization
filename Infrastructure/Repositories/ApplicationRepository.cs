@@ -17,7 +17,7 @@ public class ApplicationRepository : IApplicationRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Application>> GetAllAsync()
+    public async Task<IEnumerable<Aplication>> GetAllAsync()
     {
         return await _context.Applications
             .AsSplitQuery() 
@@ -26,7 +26,7 @@ public class ApplicationRepository : IApplicationRepository
             .ToListAsync();
     }
 
-    public async Task<Application?> GetByIdAsync(long id)
+    public async Task<Aplication?> GetByIdAsync(long id)
     {
         return await _context.Applications
             .AsSplitQuery()
@@ -35,7 +35,7 @@ public class ApplicationRepository : IApplicationRepository
             .FirstOrDefaultAsync(a => a.Id == id);
     }
 
-    public async Task<Application?> GetByClientIdAsync(string clientId)
+    public async Task<Aplication?> GetByClientIdAsync(string clientId)
     {
         return await _context.Applications
             .AsSplitQuery()
@@ -44,7 +44,7 @@ public class ApplicationRepository : IApplicationRepository
             .FirstOrDefaultAsync(a => a.ClientId == clientId);
     }
 
-    public async Task<IEnumerable<Application>> GetByRoleIdAsync(long roleId)
+    public async Task<IEnumerable<Aplication>> GetByRoleIdAsync(long roleId)
     {
         return await _context.Applications
             .AsSplitQuery()
@@ -54,15 +54,15 @@ public class ApplicationRepository : IApplicationRepository
             .ToListAsync();
     }
 
-    public async Task AddAsync(Application application)
+    public async Task AddAsync(Aplication aplication)
     {
-        await _context.Applications.AddAsync(application);
+        await _context.Applications.AddAsync(aplication);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Application application)
+    public async Task UpdateAsync(Aplication aplication)
     {
-        _context.Applications.Update(application);
+        _context.Applications.Update(aplication);
         await _context.SaveChangesAsync();
     }
 
@@ -76,7 +76,7 @@ public class ApplicationRepository : IApplicationRepository
         }
     }
 
-    public async Task<IEnumerable<Application>> GetApplicationsWithRolesAndPackagesAsync()
+    public async Task<IEnumerable<Aplication>> GetApplicationsWithRolesAndPackagesAsync()
     {
         return await _context.Applications
             .AsSplitQuery()

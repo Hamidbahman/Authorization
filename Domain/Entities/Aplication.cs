@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities;
 
 [Table("tbApplication")]
-    public class Application : BaseEntity
+    public class Aplication : BaseEntity
     {
         [Required]
         [StringLength(100)]
@@ -45,9 +45,9 @@ namespace Domain.Entities;
         public ICollection<Role> Roles { get; private set; } = new List<Role>();
         public ICollection<ApplicationPackage> ApplicationPackages { get; private set; } = new List<ApplicationPackage>();
 
-        public Application() { }
+        public Aplication() { }
 
-        public Application(
+        public Aplication(
             List<ApplicationPackage> applicationPackages,
             IEnumerable<Role> roles,
             long id,

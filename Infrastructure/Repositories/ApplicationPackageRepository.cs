@@ -1,6 +1,7 @@
 using System;
 using Domain;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -13,10 +14,10 @@ public class ApplicationPackageRepository : IApplicationPackageRepository
     }
     public async Task<List<long>> GetApplicationPackageIdsByApplicationId(long applicationId)
     {
-        return  _context.ApplicationPackages
+        return await  _context.ApplicationPackages
             .Where(ap => ap.ApplicationId == applicationId)
             .Select(ap => ap.Id)
-            .ToList();
+            .ToListAsync();
     }
 
 

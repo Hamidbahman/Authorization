@@ -11,7 +11,7 @@ public class ApplicationPackage : BaseEntity
     public string Title {get;private set;}
     [ForeignKey("Application")]
     public long ApplicationId {get;private set;}
-    public Application Application {get;private set;}
+    public Aplication Application {get;private set;}
 
     public ApplicationPackage(){}
     public ApplicationPackage(

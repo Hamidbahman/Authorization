@@ -15,7 +15,7 @@ namespace Domain
         Task<bool> ExistsAsync(string uuid);
         Task AddAsync(Role role);
         Task UpdateAsync(Role role);
-        Task <List<Role>> GetRolesByApplicationId(long applicationId);
+        Task <List<Role>> GetRolesByApplicationIdAsync(long applicationId);
 
         Task DeleteAsync(long id);
         Task<List<Permission>> GetPermissionsByRoleIdsAsync(List<long> roleIds);

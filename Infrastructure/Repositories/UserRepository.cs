@@ -25,7 +25,7 @@ public class UserRepository : IUserRepository
     public async Task<User> GetUserWithRoleAsync(long Id)
     {
     
-            return await _context.Set<User?>()
+            return await _context.Users
                 .Include(u => u.UserRoles)  
                 .FirstOrDefaultAsync(u => u.Id == Id);
 
