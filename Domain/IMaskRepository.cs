@@ -8,6 +8,8 @@ using Domain.Entities;
 
 public interface IMaskRepository
 {
+        Task<List<Mask>> GetMasksByPermissionIdsAsync(List<long> permissionIds);
+
     Task<List<Mask>> GetAllAsync();
     Task<Mask?> GetByIdAsync(int maskId);
     Task<List<Mask>> GetByPermissionIdAsync(long permissionId);

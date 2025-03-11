@@ -8,26 +8,23 @@ namespace Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly AuthorizationDbContext _context;
-    public UserRepository (AuthorizationDbContext context)
+    private readonly AuthDbContext dbContext;
+
+    public UserRepository(AuthDbContext dbContext)
     {
-        _context = context;
+        this.dbContext = dbContext;
     }
 
-    public async Task<User> GetUserByIdAsync(long id)
-    {    
-        User user =
-        await _context.Users.FirstOrDefaultAsync(u=> u.Id == id);
-
-        return user;
+    public async Task<User?> GetUserByIdAsync(long userId)
+    {
+        return await dbContext.Users
+            .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+            .FirstOrDefaultAsync(u => u.Id == userId);
     }
 
-    public async Task<User> GetUserWithRoleAsync(long Id)
+    public Task<User> GetUserWithRoleAsync(long Id)
     {
-    
-            return await _context.Users
-                .Include(u => u.UserRoles)  
-                .FirstOrDefaultAsync(u => u.Id == Id);
-
+        throw new NotImplementedException();
     }
 }

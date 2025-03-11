@@ -1,30 +1,19 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Domain.Entities;
 
 public abstract class BaseEntity
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public virtual long Id { get; protected set; }  
+    public long Id { get; private set; }
+    public DateTime CreateDate { get; private set; }
+    public DateTime ModifyDate { get; private set; }
+    public DateTime? DeleteDate { get; private set; }
+    public string? DeleteUser { get; private set; }
+    public string? ModifyUser { get; private set; }
 
-    public virtual DateTime CreateDate { get; private set; }
-    public virtual DateTime? DeleteDate { get; private set; }
-    
-    [StringLength(50)]
-    public virtual string? DeleteUser { get; private set; } = null;
+    // Parameterless constructor for EF Core
+    protected BaseEntity() { }
 
-    public virtual DateTime ModifyDate { get; private set; }
-
-    [StringLength(50)]
-    public virtual string? ModifyUser { get; private set; } = null;
-
-    [Timestamp]
-    public byte[]? RowVersion { get; private set; }
-
-    protected BaseEntity(long id, DateTime createDate, DateTime modifyDate, DateTime? deleteDate = null, string? deleteUser = null, string? modifyUser = null)
+    // Constructor with all required fields
+    protected BaseEntity(long id, DateTime createDate, DateTime modifyDate, DateTime? deleteDate, string? deleteUser, string? modifyUser)
     {
         Id = id;
         CreateDate = createDate;
@@ -33,6 +22,4 @@ public abstract class BaseEntity
         DeleteUser = deleteUser;
         ModifyUser = modifyUser;
     }
-
-    protected BaseEntity() { }
 }

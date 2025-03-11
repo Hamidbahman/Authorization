@@ -9,80 +9,77 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Domain;
 using Infrastructure.Data;
 
-namespace Infrastructure.Repositories
-{
+namespace Infrastructure.Repositories;
+
     public class ActeeRepository : IActeeRepository
+{
+    private readonly AuthDbContext dbContext;
+
+    public ActeeRepository(AuthDbContext dbContext)
     {
-        private readonly AuthorizationDbContext _context;
+        this.dbContext = dbContext;
+    }
 
-        public ActeeRepository(AuthorizationDbContext context)
-        {
-            _context = context;
-        }
+    public async Task<List<Actee>> GetActeesByIdsAsync(List<long> acteeIds)
+    {
+        return await dbContext.Actees
+            .Where(a => acteeIds.Contains(a.Id))
+            .ToListAsync();
+    }
+        public async Task<List<Actee>> GetActeesByApplicationPackageIdAsync(long applicationPackageId)
+    {
+        return await dbContext.Actees
+                             .Where(a => a.ApplicationPackageId == applicationPackageId)
+                             .ToListAsync();
+    }
 
-        public async Task<Actee> GetByIdAsync(long id)
-        {
-            return await _context.Set<Actee>().FindAsync(id);
-        }
+    public Task<Actee> GetByIdAsync(long id)
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task<Actee> GetByUuidAsync(string uuid)
-        {
-            return await _context.Set<Actee>().FirstOrDefaultAsync(a => a.Uuid == uuid);
-        }
+    public Task<Actee> GetByUuidAsync(string uuid)
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task<IEnumerable<Actee>> GetAllAsync()
-        {
-            return await _context.Set<Actee>().ToListAsync();
-        }
+    public Task<IEnumerable<Actee>> GetAllAsync()
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task<IEnumerable<Actee>> GetByStatusAsync(StatusTypes status)
-        {
-            return await _context.Set<Actee>().Where(a => a.StatusType == status).ToListAsync();
-        }
+    public Task<IEnumerable<Actee>> GetByStatusAsync(StatusTypes status)
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task<IEnumerable<Actee>> GetByActeeTypeAsync(ActeeTypes acteeType)
-        {
-            return await _context.Set<Actee>().Where(a => a.ActeeType == acteeType).ToListAsync();
-        }
+    public Task<IEnumerable<Actee>> GetByActeeTypeAsync(ActeeTypes acteeType)
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task AddAsync(Actee actee)
-        {
-            await _context.Set<Actee>().AddAsync(actee);
-        }
+    public Task<Actee?> GetActeeByApplicationId(long applicationId)
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task UpdateAsync(Actee actee)
-        {
-            EntityEntry<Actee> entityEntry = _context.Entry(actee);
-            entityEntry.State = EntityState.Modified;
-        }
+    public Task AddAsync(Actee actee)
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task DeleteAsync(long id)
-        {
-            var actee = await GetByIdAsync(id);
-            if (actee != null)
-            {
-                _context.Set<Actee>().Remove(actee);
-            }
-        }
+    public Task UpdateAsync(Actee actee)
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
-        }
-        public async Task<List<Actee>> GetActeesByClientIdAsync(string clientId)
-        {
-            return await _context.Set<Actee>()
-                .Include(a => a.ApplicationPackage)
-                .ThenInclude(ap => ap.Application)
-                .Where(a => a.ApplicationPackage.Application.ClientId == clientId)
-                .ToListAsync();
-        }
+    public Task DeleteAsync(long id)
+    {
+        throw new NotImplementedException();
+    }
 
-
-        public async Task<Actee?> GetActeeByApplicationId(long applicationId)
-        {
-            return await _context.Set<Actee>()
-                .Include(a => a.ApplicationPackage)
-                .FirstOrDefaultAsync(a => a.ApplicationPackage.ApplicationId == applicationId);        }
+    public Task<int> SaveChangesAsync()
+    {
+        throw new NotImplementedException();
     }
 }

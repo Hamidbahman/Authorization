@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Infrastructure.Repositories;
 public class UserRoleRepository : IUserRoleRepository
 {
-    private readonly AuthorizationDbContext _context;
+    private readonly AuthDbContext _context;
 
-    public UserRoleRepository(AuthorizationDbContext context)
+    public UserRoleRepository(AuthDbContext context)
     {
         _context = context;
     }

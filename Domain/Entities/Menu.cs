@@ -1,29 +1,32 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Domain.Entities;
-
-[Table("tbMenu")]
-public class Menu
+public class Menu : BaseEntity
 {
-    [Key]
-    [StringLength(50)]
-    public string MenuKey {get;private set;}
-    public short Priority {get;private set;}
-    [StringLength(50)]
-    public string Icon {get;private set;}
-    [ForeignKey("Actee")]
-    public long ActeeId {get;private set;}
-    public Actee Actee {get;private set;}
+    public string MenuKey { get; private set; }
+    public int Priority { get; private set; }
+    public string Icon { get; private set; }
 
-    public Menu() {}
-    public Menu(string menuKey, short priority, string icon, long acteeId)
-{
-    MenuKey = menuKey;
-    Priority = priority;
-    Icon = icon;
-    ActeeId = acteeId;
-}
+    [ForeignKey("ActeeId")]
+    public long ActeeId { get; private set; }
+    public Actee Actee { get; private set; }
 
+    private Menu(){}
+    public Menu(
+        long id,
+        DateTime createDate,
+        DateTime modifyDate,
+        DateTime? deleteDate,
+        string? deleteUser,
+        string? modifyUser,
+        string menuKey,
+        int priority,
+        string icon,
+        long acteeId
+    ) : base(id, createDate, modifyDate, deleteDate, deleteUser, modifyUser)
+    {
+        MenuKey = menuKey;
+        Priority = priority;
+        Icon = icon;
+        ActeeId = acteeId;
+    }
 }

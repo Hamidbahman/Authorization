@@ -1,34 +1,34 @@
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.Entities
+using System.Text.Json.Serialization;
+
+namespace Domain.Entities;
+public class UserRole : BaseEntity
 {
-    [Table("tbUserRole")]
-    public class UserRole : BaseEntity
+    public long UserId { get; private set; }
+    [JsonIgnore]
+    public User User { get; private set; }
+
+    public long RoleId { get; private set; }
+    [JsonIgnore]
+    public Role Role { get; private set; }
+
+    public bool IsDefault { get; private set; }
+
+    private UserRole(){}
+    public UserRole(
+        long id,
+        DateTime createDate,
+        DateTime modifyDate,
+        DateTime? deleteDate,
+        string? deleteUser,
+        string? modifyUser,
+        long userId,
+        long roleId,
+        bool isDefault
+    ) : base(id, createDate, modifyDate, deleteDate, deleteUser, modifyUser)
     {
-        [ForeignKey("User")]
-        public long UserId { get; private set; }
-
-        [ForeignKey("Role")]
-        public long RoleId { get; private set; }
-
-        public Role? Role { get; private set; }
-
-        public bool IsDefault { get; private set; } = false;
-
-        public UserRole() {}
-
-        public UserRole(
-            long id,
-            long userId,
-            long roleId,
-            bool isDefault
-        )
-        {
-            Id = id;
-            UserId = userId;
-            RoleId = roleId;
-            IsDefault = isDefault;
-        }
+        UserId = userId;
+        RoleId = roleId;
+        IsDefault = isDefault;
     }
 }

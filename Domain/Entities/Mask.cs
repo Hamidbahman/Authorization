@@ -1,21 +1,20 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Domain.Entities;
-
-[Table("tbMask")]
-public class Mask
+public class Mask : BaseEntity
 {
-    [Key]
-    public int MaskId { get; private set; }
-
-    [ForeignKey("Permission")]
     public long PermissionId { get; private set; }
     public Permission Permission { get; private set; }
 
-    public Mask() {}
 
-    public Mask(long permissionId)
+    private Mask(){}
+    public Mask(
+        long id,
+        DateTime createDate,
+        DateTime modifyDate,
+        DateTime? deleteDate,
+        string? deleteUser,
+        string? modifyUser,
+        long permissionId
+    ) : base(id, createDate, modifyDate, deleteDate, deleteUser, modifyUser)
     {
         PermissionId = permissionId;
     }

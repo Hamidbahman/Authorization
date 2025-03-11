@@ -5,6 +5,9 @@ using Domain.Enums;
 namespace Domain;
     public interface IActeeRepository
     {
+        Task<List<Actee>> GetActeesByIdsAsync(List<long> acteeIds);
+        Task<List<Actee>> GetActeesByApplicationPackageIdAsync(long applicationPackageId);
+
         Task<Actee> GetByIdAsync(long id);
         Task<Actee> GetByUuidAsync(string uuid);
         Task<IEnumerable<Actee>> GetAllAsync();

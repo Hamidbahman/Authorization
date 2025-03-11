@@ -7,6 +7,8 @@ namespace Domain
 {
     public interface IRoleRepository
     {
+        Task<Role?> GetRoleByIdAsync(long roleId);
+        Task<List<Role>> GetRolesByUserIdAsync(long userId);
         Task<Role?> GetByIdAsync(long id);
         Task<Role?> GetByUuidAsync(string uuid);
         Task<IEnumerable<Role>> GetAllAsync();

@@ -9,95 +9,84 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class RoleRepository : IRoleRepository
+public class RoleRepository : IRoleRepository
+{
+    private readonly AuthDbContext dbContext;
+
+    public RoleRepository(AuthDbContext dbContext)
     {
-        private readonly AuthorizationDbContext _context;
+        this.dbContext = dbContext;
+    }
 
-        public RoleRepository(AuthorizationDbContext context)
+        public Task AddAsync(Role role)
         {
-            _context = context;
-        }
-        public async Task<List<Role>> GetRolesByApplicationIdAsync(long applicationId)
-        {
-            return await _context.Roles
-                .Where(r => r.ApplicationId == applicationId)
-               .Include(r => r.Permissions)
-               .ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<Role?> GetByIdAsync(long id)
+        public Task DeleteAsync(long id)
         {
-            return await _context.Roles
-                .Include(r => r.Permissions)
-                .FirstOrDefaultAsync(r => r.Id == id);
+            throw new NotImplementedException();
         }
 
-        public async Task<Role?> GetByUuidAsync(string uuid)
+        public Task<bool> ExistsAsync(string uuid)
         {
-            return await _context.Roles
-                .Include(r => r.Permissions)
-                .FirstOrDefaultAsync(r => r.Uuid == uuid);
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Role>> GetAllAsync()
+        public Task<IEnumerable<Role>> GetAllAsync()
         {
-            return await _context.Roles
-                .Include(r => r.Permissions)
-                .ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<List<Permission>> GetPermissionsByRoleIdsAsync(List<long> roleIds)
+        public Task<IEnumerable<Role>> GetByApplicationIdAsync(long applicationId)
         {
-            return await _context.Roles
-                .Where(r => roleIds.Contains(r.Id))
-                .SelectMany(r => r.Permissions)
-                .ToListAsync();
+            throw new NotImplementedException();
         }
 
-
-
-
-        public async Task<IEnumerable<Role>> GetByApplicationIdAsync(long applicationId)
+        public Task<Role?> GetByIdAsync(long id)
         {
-            return await _context.Roles
-                .Where(r => r.ApplicationId == applicationId)
-                .Include(r => r.Permissions)
-                .ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Role>> GetByStatusAsync(StatusTypes status)
+        public Task<IEnumerable<Role>> GetByStatusAsync(StatusTypes status)
         {
-            return await _context.Roles
-                .Where(r => r.Status == status)
-                .Include(r => r.Permissions)
-                .ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> ExistsAsync(string uuid)
+        public Task<Role?> GetByUuidAsync(string uuid)
         {
-            return await _context.Roles.AnyAsync(r => r.Uuid == uuid);
+            throw new NotImplementedException();
         }
 
-        public async Task AddAsync(Role role)
+        public Task<List<Permission>> GetPermissionsByRoleIdsAsync(List<long> roleIds)
         {
-            await _context.Roles.AddAsync(role);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task UpdateAsync(Role role)
+        public async Task<Role?> GetRoleByIdAsync(long roleId)
+    {
+        return await dbContext.Roles
+            .Include(r => r.Permissions)
+            .FirstOrDefaultAsync(r => r.Id == roleId);
+    }
+
+        public Task<List<Role>> GetRolesByApplicationIdAsync(long applicationId)
         {
-            _context.Roles.Update(role);
-            await _context.SaveChangesAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(long id)
+        public async Task<List<Role>> GetRolesByUserIdAsync(long userId)
+    {
+        return await dbContext.UserRoles
+            .Where(ur => ur.UserId == userId)
+            .Select(ur => ur.Role)
+            .Include(r => r.Permissions)
+            .ToListAsync();
+    }
+
+        public Task UpdateAsync(Role role)
         {
-            var role = await _context.Roles.FindAsync(id);
-            if (role != null)
-            {
-                _context.Roles.Remove(role);
-                await _context.SaveChangesAsync();
-            }
+            throw new NotImplementedException();
         }
     }
 }

@@ -10,13 +10,19 @@ namespace Infrastructure.Repositories;
 
 public class ApplicationRepository : IApplicationRepository
 {
-    private readonly AuthorizationDbContext _context;
+    private readonly AuthDbContext _context;
 
-    public ApplicationRepository(AuthorizationDbContext context)
+    public ApplicationRepository(AuthDbContext context)
     {
         _context = context;
     }
 
+
+    public async Task<Aplication?> GetApplicationByIdAsync(long applicationId)
+    {
+        return await _context.Applications
+                             .FirstOrDefaultAsync(a => a.Id == applicationId);
+    }
     public async Task<IEnumerable<Aplication>> GetAllAsync()
     {
         return await _context.Applications
@@ -53,6 +59,18 @@ public class ApplicationRepository : IApplicationRepository
             .Include(a => a.ApplicationPackages)
             .ToListAsync();
     }
+            public async Task<List<Aplication>> GetApplicationsByIdsAsync(List<long> applicationIds)
+        {
+            if (applicationIds == null || !applicationIds.Any())
+            {
+                return new List<Aplication>();
+            }
+
+            // Fetch applications based on provided applicationIds
+            return await _context.Applications
+                                   .Where(a => applicationIds.Contains(a.Id))
+                                   .ToListAsync();
+        }
 
     public async Task AddAsync(Aplication aplication)
     {

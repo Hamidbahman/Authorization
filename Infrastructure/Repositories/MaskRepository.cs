@@ -8,14 +8,14 @@ using Domain;
 
 namespace Infrastructure.Repositories
 {
-    public class MaskRepository : IMaskRepository
-    {
-        private readonly AuthorizationDbContext _context;
+   public class MaskRepository : IMaskRepository
+{
+    private readonly AuthDbContext dbContext;
 
-        public MaskRepository(AuthorizationDbContext context)
-        {
-            _context = context;
-        }
+    public MaskRepository(AuthDbContext dbContext)
+    {
+        this.dbContext = dbContext;
+    }
 
         public Task AddAsync(Mask mask)
         {
@@ -57,35 +57,21 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<Mask>> GetMasksByPermissionsAsync(List<long> permissionIds)
+        public async Task<List<Mask>> GetMasksByPermissionIdsAsync(List<long> permissionIds)
+    {
+        return await dbContext.Masks
+            .Where(m => permissionIds.Contains(m.PermissionId))
+            .ToListAsync();
+    }
+
+        public Task<List<Mask>> GetMasksByPermissionsAsync(List<long> permissionIds)
         {
-            return await _context.Set<Mask>()
-                .Where(m => permissionIds.Contains(m.PermissionId))
-                .ToListAsync();
+            throw new NotImplementedException();
         }
-        
-        public async Task<List<Mask>> GetMasksByUserIdAndClientIdAsync(long userId, string clientId)
+
+        public Task<List<Mask>> GetMasksByUserIdAndClientIdAsync(long userId, string clientId)
         {
-            return await _context.Masks
-                .Where(m => _context.Permissions
-                    .Where(p => _context.Roles
-                        .Where(r => _context.UserRoles
-                            .Where(ur => ur.UserId == userId)
-                            .Select(ur => ur.RoleId)
-                            .Contains(r.Id)
-                        )
-                        .Where(r => _context.Applications
-                            .Where(a => a.ClientId == clientId)
-                            .Select(a => a.Id)
-                            .Contains(r.ApplicationId)
-                        )
-                        .Select(r => r.Id)
-                        .Contains(p.RoleId)
-                    )
-                    .Select(p => p.Id)
-                    .Contains(m.PermissionId)
-                )
-                .ToListAsync();
+            throw new NotImplementedException();
         }
 
         public Task UpdateAsync(Mask mask)

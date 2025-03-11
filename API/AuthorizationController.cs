@@ -1,82 +1,65 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Application.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace YourNamespace.Controllers
+namespace Application.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class AuthorizationController : ControllerBase
+    [Route("api/access")]
+    public class UserAccessController : ControllerBase
     {
-        private readonly AuthorizationService _authorizationService;
+        private readonly UserAccessService _userAccessService;
 
-        public AuthorizationController(AuthorizationService authorizationService)
+        public UserAccessController(UserAccessService userAccessService)
         {
-            _authorizationService = authorizationService;
+            _userAccessService = userAccessService;
         }
 
-        /// <summary>
-        /// Get applications based on the user roles from the JWT token.
-        /// </summary>
-        /// <param name="token">The JWT token sent in the authorization header</param>
-        /// <returns>List of applications accessible to the user based on their roles</returns>
-        [HttpGet("applications")]
-        public async Task<IActionResult> GetApplications([FromHeader] long userId)
+        // POST api/access (Get User Access with Mask IDs)
+        [HttpPost("user-access")]
+        public async Task<IActionResult> GetUserAccess([FromBody] UserAccessRequest request)
         {
-                var applications = await _authorizationService.GetApplicationsByUserRolesAsync(userId);
-
-                if (applications == null)
-                {
-                    return NotFound("No applications found for the user.");
-                }
-
-                return Ok(applications);
+            try
+            {
+                // Call the service to get the user access
+                var result = await _userAccessService.GetUserAccessAsync(request.UserId, request.ClientId);
+                return Ok(result);  // Return the list of mask IDs as a response
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });  // Return the error message in case of an exception
+            }
         }
 
-        /// <summary>
-        /// Get masks based on the user ID, client ID, and menu key.
-        /// </summary>
-        /// <param name="userId">User ID</param>
-        /// <param name="clientId">Client ID</param>
-        /// <param name="menuKey">Menu Key</param>
-        /// <returns>List of masks the user has access to</returns>
-        [HttpGet("masks")]
-public async Task<IActionResult> GetMasks([FromQuery] long userId, [FromQuery] string clientId)
-{
-    if (userId <= 0 || string.IsNullOrWhiteSpace(clientId))
-    {
-        return BadRequest("Invalid parameters.");
-    }
-
-    try
-    {
-        var masks = await _authorizationService.GetMasksAsync(userId, clientId);
-
-        if (masks == null || !masks.Any())
+        // POST api/access/applications (Get Applications for the User)
+        [HttpPost("user-applications")]
+        public async Task<IActionResult> GetUserApplications([FromBody] UserApplicationsRequest request)
         {
-            return NotFound("No masks found for the provided parameters.");
+            try
+            {
+                // Call the service to get the applications based on userId
+                var result = await _userAccessService.GetUserApplicationsAsync(request.UserId);
+                return Ok(result);  // Return the list of applications associated with the user
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { error = ex.Message });  // Return the error message in case of an exception
+            }
         }
+    }
 
-        return Ok(masks);
-    }
-    catch (ArgumentException ex)
+    // Model for the user access request body
+    public class UserAccessRequest
     {
-        return BadRequest(ex.Message);
+        public long UserId { get; set; }
+        public string ClientId { get; set; }
     }
-    catch (KeyNotFoundException ex)
-    {
-        return NotFound(ex.Message);
-    }
-    catch (UnauthorizedAccessException ex)
-    {
-        return Forbid();
-    }
-    catch (Exception ex)
-    {
-        return StatusCode(500, "An error occurred while processing your request.");
-    }
-}
 
+    // Model for the user applications request body
+    public class UserApplicationsRequest
+    {
+        public long UserId { get; set; }
     }
 }

@@ -9,64 +9,54 @@ namespace Infrastructure.Repositories;
 
 public class MenuRepository : IMenuRepository
 {
-    private readonly AuthorizationDbContext _context;
+    private readonly AuthDbContext dbContext;
 
-    public MenuRepository(AuthorizationDbContext context)
+    public MenuRepository(AuthDbContext dbContext)
     {
-        _context = context;
+        this.dbContext = dbContext;
     }
 
-    public async Task<Menu?> GetByMenuKeyAsync(string menuKey)
+    public Task AddAsync(Menu menu)
     {
-        return await _context.Menus.FirstOrDefaultAsync(m => m.MenuKey == menuKey);
+        throw new NotImplementedException();
     }
 
-    public async Task<Menu?> GetByIdAsync(long id)
+    public Task DeleteAsync(string menuKey)
     {
-        return await _context.Menus.FindAsync(id);
+        throw new NotImplementedException();
     }
 
-    public async Task<List<Menu>> GetAllAsync()
+    public Task<List<Menu>> GetAllAsync()
     {
-        return await _context.Menus.ToListAsync();
+        throw new NotImplementedException();
     }
-    
+
+    public Task<List<Menu>> GetByActeeIdAsync(long acteeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Menu?> GetByIdAsync(long id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Menu?> GetByMenuKeyAsync(string menuKey)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<List<string>> GetMenuKeysByActeeIdsAsync(List<long> acteeIds)
     {
-    if (acteeIds == null || !acteeIds.Any())
-        return new List<string>();
-
-    return await _context.Menus
-        .Where(m => acteeIds.Contains(m.ActeeId))
-        .Select(m => m.MenuKey)
-        .ToListAsync();
+        return await dbContext.Menus
+            .Where(m => acteeIds.Contains(m.ActeeId))
+            .Select(m => m.MenuKey)
+            .ToListAsync();
     }
 
-    public async Task<List<Menu>> GetByActeeIdAsync(long acteeId)
+    public Task UpdateAsync(Menu menu)
     {
-        return await _context.Menus.Where(m => m.ActeeId == acteeId).ToListAsync();
-    }
-
-    public async Task AddAsync(Menu menu)
-    {
-        await _context.Menus.AddAsync(menu);
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Menu menu)
-    {
-        _context.Menus.Update(menu);
-        await _context.SaveChangesAsync();
-    }
-
-
-    public async Task DeleteAsync(string menuKey)
-    {
-        var menu = await GetByMenuKeyAsync(menuKey);
-        if (menu != null)
-        {
-            _context.Menus.Remove(menu);
-            await _context.SaveChangesAsync();
-        }
+        throw new NotImplementedException();
     }
 }
+

@@ -7,121 +7,102 @@ using Domain.Enums;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories
-{
+namespace Infrastructure.Repositories;
+
     public class PermissionRepository : IPermissionRepository
-    {
-        private readonly AuthorizationDbContext _context;
-
-        public PermissionRepository(AuthorizationDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<Permission?> GetByIdAsync(long id)
-        {
-            return await _context.Permissions
-                .Include(p => p.Role)
-                .Include(p => p.Actee)
-                .FirstOrDefaultAsync(p => p.Id == id);
-        }
-
-        public async Task<IEnumerable<Permission>> GetAllAsync()
-        {
-            return await _context.Permissions
-                .Include(p => p.Role)
-                .Include(p => p.Actee)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Permission>> GetByRoleIdAsync(long roleId)
-        {
-            return await _context.Permissions
-                .Where(p => p.RoleId == roleId)
-                .Include(p => p.Actee)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Permission>> GetByActeeIdAsync(long acteeId)
-        {
-            return await _context.Permissions
-                .Where(p => p.ActeeId == acteeId)
-                .Include(p => p.Role)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Permission>> GetByStatusAsync(StatusTypes status)
-        {
-            return await _context.Permissions
-                .Where(p => p.Status == status)
-                .Include(p => p.Role)
-                .Include(p => p.Actee)
-                .ToListAsync();
-        }
-        public List<long> GetPermissionIdsByRoles(List<Role> roles)
-        {
-            return roles.SelectMany(r => r.Permissions.Select(p => p.Id)).Distinct().ToList();
-        }
-
-        public async Task<List<Permission>> GetPermissionsByRolesAsync(List<long> roleIds)
-        {
-            return await _context.Set<Permission>()
-                .Where(p => roleIds.Contains(p.RoleId))
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Permission>> GetByGrantingLevelAsync(int granting)
-        {
-            return await _context.Permissions
-                .Where(p => p.Granting == granting)
-                .Include(p => p.Role)
-                .Include(p => p.Actee)
-                .ToListAsync();
-        }
-
-        public async Task<bool> ExistsAsync(long roleId, long acteeId)
-        {
-            return await _context.Permissions
-                .AnyAsync(p => p.RoleId == roleId && p.ActeeId == acteeId);
-        }
-
-        public async Task AddAsync(Permission permission)
-        {
-            await _context.Permissions.AddAsync(permission);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(Permission permission)
-        {
-            _context.Permissions.Update(permission);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(long id)
-        {
-            var permission = await _context.Permissions.FindAsync(id);
-            if (permission != null)
-            {
-                _context.Permissions.Remove(permission);
-                await _context.SaveChangesAsync();
-            }
-        }
-        public Task<List<long>> GetPermissionIdsByRolesAsync(List<Role> roles)
-        {
-            var permissionIds = roles
-                .SelectMany(r => r.Permissions.Select(p => p.Id))
-                .Distinct()
-                .ToList();
-
-            return Task.FromResult(permissionIds);
-    }
-
-        public async Task<List<Mask>> GetMasksByPermissionIdsAsync(List<long> permissionIds)
 {
-    return await _context.Masks
-        .Where(m => permissionIds.Contains(m.PermissionId))
-        .ToListAsync();
-}
+    private readonly AuthDbContext dbContext;
 
+    public PermissionRepository(AuthDbContext dbContext)
+    {
+        this.dbContext = dbContext;
+    }
+
+    public async Task<List<Permission>> GetPermissionsByRoleIdAsync(long roleId)
+    {
+        return await dbContext.Permissions
+            .Where(p => p.RoleId == roleId)
+            .Include(p => p.Actee)
+            .ToListAsync();
+    }
+        public async Task<List<Permission>> GetPermissionsByActeeIdsAsync(List<long> acteeIds)
+    {
+        return await dbContext.Permissions
+                             .Where(p => acteeIds.Contains(p.ActeeId))
+                             .ToListAsync();
+    }
+
+    public async Task<List<Permission>> GetPermissionsByUserIdAsync(long userId)
+    {
+        return await dbContext.Permissions
+            .Where(p => p.Role.UserRoles.Any(ur => ur.UserId == userId))
+            .Include(p => p.Actee)
+            .ToListAsync();
+    }
+
+    public Task<Permission?> GetByIdAsync(long id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Permission>> GetAllAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Permission>> GetByRoleIdAsync(long roleId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Permission>> GetByActeeIdAsync(long acteeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Permission>> GetByStatusAsync(StatusTypes status)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Permission>> GetByGrantingLevelAsync(int granting)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> ExistsAsync(long roleId, long acteeId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task AddAsync(Permission permission)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateAsync(Permission permission)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteAsync(long id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Mask>> GetMasksByPermissionIdsAsync(List<long> permissionIds)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<long>> GetPermissionIdsByRolesAsync(List<Role> roles)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<List<Permission>> GetPermissionsByRolesAsync(List<long> roleIds)
+    {
+        throw new NotImplementedException();
     }
 }
+

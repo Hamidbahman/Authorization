@@ -7,6 +7,12 @@ namespace Domain
 {
     public interface IPermissionRepository
     {
+            Task<List<Permission>> GetPermissionsByRoleIdAsync(long roleId);
+    Task<List<Permission>> GetPermissionsByUserIdAsync(long userId);
+
+        Task<List<Permission>> GetPermissionsByActeeIdsAsync(List<long> acteeIds);
+
+
         Task<Permission?> GetByIdAsync(long id);
         Task<IEnumerable<Permission>> GetAllAsync();
         Task<IEnumerable<Permission>> GetByRoleIdAsync(long roleId);

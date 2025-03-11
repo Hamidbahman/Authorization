@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hamid.RYMOND\\20\\authorization\\Infrastructure\\Infrastructure.csproj": {}
+    "C:\\Users\\Dr\\0101\\authorization\\Infrastructure\\Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hamid.RYMOND\\20\\authorization\\Domain\\Domain.csproj": {
+    "C:\\Users\\Dr\\0101\\authorization\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Dr\\0101\\authorization\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Domain\\Domain.csproj",
-        "packagesPath": "C:\\Users\\hamid.RYMOND\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Domain\\obj\\",
+        "projectPath": "C:\\Users\\Dr\\0101\\authorization\\Domain\\Domain.csproj",
+        "packagesPath": "C:\\Users\\Dr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dr\\0101\\authorization\\Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\hamid.RYMOND\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Dr\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +22,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -69,21 +66,17 @@
         }
       }
     },
-    "C:\\Users\\hamid.RYMOND\\20\\authorization\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\Dr\\0101\\authorization\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Dr\\0101\\authorization\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\hamid.RYMOND\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\Dr\\0101\\authorization\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Dr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dr\\0101\\authorization\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\hamid.RYMOND\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Dr\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -91,14 +84,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\hamid.RYMOND\\20\\authorization\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\hamid.RYMOND\\20\\authorization\\Domain\\Domain.csproj"
+              "C:\\Users\\Dr\\0101\\authorization\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\Dr\\0101\\authorization\\Domain\\Domain.csproj"
               }
             }
           }
@@ -134,6 +128,14 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[9.0.2, )"
             },
             "RabbitMQ.Client": {
               "target": "Package",

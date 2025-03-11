@@ -5,7 +5,8 @@ namespace Domain;
 
 public interface IUserRepository
 {
-    Task<User> GetUserByIdAsync(long Id);
     Task<User> GetUserWithRoleAsync(long Id);
+    Task<User?> GetUserByIdAsync(long userId);
+
 
 }
